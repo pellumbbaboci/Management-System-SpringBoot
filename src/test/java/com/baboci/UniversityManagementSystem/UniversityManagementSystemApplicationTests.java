@@ -1,4 +1,4 @@
-package com.example.UniversityManagementSystem;
+package com.baboci.UniversityManagementSystem;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
