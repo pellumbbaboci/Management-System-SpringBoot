@@ -51,7 +51,7 @@ public class Professor {
 
     @Override
     public String toString(){
-        return "Employee [id=" + id + ", name=" + name + ", gender=" + gender +
+        return "Professor [id=" + id + ", name=" + name + ", gender=" + gender +
                 ", department=" + department + "]";
     }
 }

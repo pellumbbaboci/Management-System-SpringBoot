@@ -13,5 +13,4 @@ public interface ProfessorService {
     List<Professor> get();
     void delete (int id);
 
-
 }
