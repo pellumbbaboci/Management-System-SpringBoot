@@ -1,6 +1,8 @@
 package com.baboci.UniversityManagementSystem.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tbl_student")
@@ -17,8 +19,19 @@ public class Student {
     @Column
     private String department;
 
+    @ManyToMany(mappedBy = "students")
+    private Set<Professor> professors = new HashSet<>();
+
     public Integer getId() {
         return id;
+    }
+
+    public Set<Professor> getProfessors() {
+        return professors;
+    }
+
+    public void setProfessors(Set<Professor> professors) {
+        this.professors = professors;
     }
 
     public void setId(Integer id) {
