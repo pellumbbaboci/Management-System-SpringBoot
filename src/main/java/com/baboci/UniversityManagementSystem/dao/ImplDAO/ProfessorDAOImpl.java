@@ -36,7 +36,9 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 
     @Override
     public void delete(int id) {
-
+        Session currentSession = entityManager.unwrap(Session.class);
+        Professor profObj = currentSession.get(Professor.class, id);
+        currentSession.delete(profObj);
     }
 
 
