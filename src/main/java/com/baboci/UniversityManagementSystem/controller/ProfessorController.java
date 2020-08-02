@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/management")
+//@RequestMapping("/management")
 public class ProfessorController {
 
     @Autowired
-    ProfessorService professorService;
+    private ProfessorService professorService;
 
-
-    @PostMapping("/professor")
+    @PostMapping("/save_professor")
     public Professor save(@RequestBody Professor professorObj){
         professorService.save(professorObj);
         return professorObj;
@@ -26,7 +25,7 @@ public class ProfessorController {
         return professorService.get();
     }
 
-    @GetMapping("/professor/{id}")
+    @GetMapping("/getById_professor/{id}")
     public Professor get(@PathVariable int id){
         Professor profObj = professorService.get(id);
         if(profObj == null){
@@ -35,10 +34,16 @@ public class ProfessorController {
         return profObj;
     }
 
-    @DeleteMapping("/professor/{id}")
+    @DeleteMapping("/delete_professor/{id}")
     public String delete(@PathVariable int id){
         professorService.delete(id);
         return "Professor deleted with id: "+id;
+    }
+
+    @PutMapping("/update_professor")
+    public Professor update(@RequestBody Professor professorObj){
+        professorService.save(professorObj);
+        return professorObj;
     }
 
 

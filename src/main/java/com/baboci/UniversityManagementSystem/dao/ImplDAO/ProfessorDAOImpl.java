@@ -16,17 +16,20 @@ public class ProfessorDAOImpl implements ProfessorDAO {
     @Autowired
     private EntityManager entityManager;
 
+    @Override
     public void save (Professor professor){
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.saveOrUpdate(professor);
     }
 
+    @Override
     public Professor get(int id){
         Session currentSession = entityManager.unwrap(Session.class);
         Professor profObj = currentSession.get(Professor.class,id);
         return profObj;
     }
 
+    @Override
     public List<Professor> get(){
         Session currentSession = entityManager.unwrap(Session.class);
         Query<Professor> query = currentSession.createQuery("from tbl_professor", Professor.class);
@@ -40,7 +43,5 @@ public class ProfessorDAOImpl implements ProfessorDAO {
         Professor profObj = currentSession.get(Professor.class, id);
         currentSession.delete(profObj);
     }
-
-
 
 }

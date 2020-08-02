@@ -10,5 +10,4 @@ public interface ProfessorDAO {
     Professor get(int id);
     List<Professor> get();
     void delete (int id);
-
 }
