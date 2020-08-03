@@ -1,48 +1,51 @@
 package com.baboci.UniversityManagementSystem.model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "tbl_student")
 public class Student {
 
-    @Column
+    @Column(name = "student_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
+    @Column(name = "student_name")
     private String name;
-    @Column
+    @Column(name = "student_gender")
     private String gender;
-    @Column
+    @Column(name = "student_dep")
     private String department;
+    @Column(name = "student_dateOfReg")
+    private Date dateOfRegistration;
 
-    @ManyToMany(mappedBy = "students")
-    private Set<Professor> professors = new HashSet<>();
+    @OneToMany(mappedBy="studentID",
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
+    private List<Enrollment> enrollments;
 
-    @ManyToMany(mappedBy = "studentss")
-    private Set<Course> courses = new HashSet<>();
+
+    public Date getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public void setDateOfRegistration(Date dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
+    }
+
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
 
     public Integer getId() {
         return id;
-    }
-
-    public Set<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
-    }
-
-    public Set<Professor> getProfessors() {
-        return professors;
-    }
-
-    public void setProfessors(Set<Professor> professors) {
-        this.professors = professors;
     }
 
     public void setId(Integer id) {

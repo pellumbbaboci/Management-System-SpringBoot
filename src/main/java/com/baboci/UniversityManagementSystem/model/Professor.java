@@ -9,24 +9,17 @@ import java.util.Set;
 @Table(name = "tbl_professor")
 public class Professor {
 
-    @Column
+    @Column(name = "professor_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
+    @Column(name = "professor_name")
     private String name;
-    @Column
+    @Column(name = "professor_gender")
     private String gender;
-    @Column
+    @Column(name = "professor_dep")
     private String department;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "Professor_Student",
-            joinColumns = { @JoinColumn(name = "professor_id") },
-            inverseJoinColumns = { @JoinColumn(name = "student_id") }
-    )
-    Set<Student> students = new HashSet<>();
 
     @OneToMany(mappedBy="professorID",
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
@@ -38,14 +31,6 @@ public class Professor {
 
     public void setCourseList(List<Course> courseList) {
         this.courseList = courseList;
-    }
-
-    public Set<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<Student> students) {
-        this.students = students;
     }
 
     public Integer getId() {

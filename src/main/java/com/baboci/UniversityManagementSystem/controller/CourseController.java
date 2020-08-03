@@ -14,9 +14,9 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping("/save_course")
-    public Course save(@RequestBody Course professorObj){
-        courseService.save(professorObj);
-        return professorObj;
+    public Course save(@RequestBody Course courseObj){
+        courseService.save(courseObj);
+        return courseObj;
     }
 
     @GetMapping("/list_course")
@@ -26,11 +26,11 @@ public class CourseController {
 
     @GetMapping("/getById_course/{id}")
     public Course get(@PathVariable int id){
-        Course profObj = courseService.get(id);
-        if(profObj == null){
+        Course courseObj = courseService.get(id);
+        if(courseObj == null){
             throw new RuntimeException("There is no course object");
         }
-        return profObj;
+        return courseObj;
     }
 
     @DeleteMapping("/delete_course/{id}")
@@ -40,9 +40,9 @@ public class CourseController {
     }
 
     @PutMapping("/update_course")
-    public Course update(@RequestBody Course professorObj){
-        courseService.save(professorObj);
-        return professorObj;
+    public Course update(@RequestBody Course courseObj){
+        courseService.save(courseObj);
+        return courseObj;
     }
 
 }
