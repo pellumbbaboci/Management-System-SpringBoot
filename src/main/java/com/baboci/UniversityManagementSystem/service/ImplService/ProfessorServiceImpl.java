@@ -5,8 +5,8 @@ import com.baboci.UniversityManagementSystem.model.Professor;
 import com.baboci.UniversityManagementSystem.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

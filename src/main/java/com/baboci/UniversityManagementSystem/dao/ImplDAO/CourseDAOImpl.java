@@ -1,9 +1,9 @@
 package com.baboci.UniversityManagementSystem.dao.ImplDAO;
 
-import com.baboci.UniversityManagementSystem.dao.ProfessorDAO;
-import com.baboci.UniversityManagementSystem.model.Professor;
-import org.hibernate.query.Query;
+import com.baboci.UniversityManagementSystem.dao.CourseDAO;
+import com.baboci.UniversityManagementSystem.model.Course;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,37 +11,36 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
-public class ProfessorDAOImpl implements ProfessorDAO {
+public class CourseDAOImpl implements CourseDAO {
 
     @Autowired
     private EntityManager entityManager;
 
     @Override
-    public void save (Professor professor){
+    public void save(Course course) {
         Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.saveOrUpdate(professor);
+        currentSession.saveOrUpdate(course);
     }
 
     @Override
-    public Professor get(int id){
+    public Course get(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Professor profObj = currentSession.get(Professor.class,id);
-        return profObj;
+        Course courseObj = currentSession.get(Course.class,id);
+        return courseObj;
     }
 
     @Override
-    public List<Professor> get(){
+    public List<Course> get() {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Professor> query = currentSession.createQuery("from tbl_professor", Professor.class);
-        List<Professor> list = query.getResultList();
+        Query<Course> query = currentSession.createQuery("from tbl_course", Course.class);
+        List<Course> list = query.getResultList();
         return list;
     }
 
     @Override
     public void delete(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Professor profObj = currentSession.get(Professor.class, id);
-        currentSession.delete(profObj);
+        Course courseObj = currentSession.get(Course.class, id);
+        currentSession.delete(courseObj);
     }
-
 }
