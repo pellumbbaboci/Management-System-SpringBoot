@@ -22,8 +22,19 @@ public class Student {
     @ManyToMany(mappedBy = "students")
     private Set<Professor> professors = new HashSet<>();
 
+    @ManyToMany(mappedBy = "studentss")
+    private Set<Course> courses = new HashSet<>();
+
     public Integer getId() {
         return id;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 
     public Set<Professor> getProfessors() {

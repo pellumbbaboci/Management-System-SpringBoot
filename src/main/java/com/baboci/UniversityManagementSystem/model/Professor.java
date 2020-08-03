@@ -2,6 +2,7 @@ package com.baboci.UniversityManagementSystem.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,6 +27,18 @@ public class Professor {
             inverseJoinColumns = { @JoinColumn(name = "student_id") }
     )
     Set<Student> students = new HashSet<>();
+
+    @OneToMany(mappedBy="professorID",
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
+    private List<Course> courseList;
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+    }
 
     public Set<Student> getStudents() {
         return students;

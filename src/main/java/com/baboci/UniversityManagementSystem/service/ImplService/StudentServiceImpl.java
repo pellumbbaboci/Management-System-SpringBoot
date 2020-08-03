@@ -4,10 +4,9 @@ import com.baboci.UniversityManagementSystem.dao.StudentDAO;
 import com.baboci.UniversityManagementSystem.model.Student;
 import com.baboci.UniversityManagementSystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
