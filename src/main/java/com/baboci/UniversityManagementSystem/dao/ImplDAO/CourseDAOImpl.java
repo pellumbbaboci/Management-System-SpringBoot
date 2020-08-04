@@ -32,7 +32,7 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public List<Course> get() {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Course> query = currentSession.createQuery("from tbl_course", Course.class);
+        Query<Course> query = currentSession.createQuery("from Course", Course.class);
         List<Course> list = query.getResultList();
         return list;
     }

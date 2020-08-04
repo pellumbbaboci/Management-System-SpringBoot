@@ -32,7 +32,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
     @Override
     public List<Professor> get(){
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Professor> query = currentSession.createQuery("from tbl_professor", Professor.class);
+        Query<Professor> query = currentSession.createQuery("from Professor", Professor.class);
         List<Professor> list = query.getResultList();
         return list;
     }

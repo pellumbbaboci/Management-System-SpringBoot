@@ -32,7 +32,7 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public List<Student> get() {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query query = currentSession.createQuery("from tbl_student", Student.class);
+        Query query = currentSession.createQuery("from Course", Student.class);
         List<Student> list = query.getResultList();
         return list;
     }

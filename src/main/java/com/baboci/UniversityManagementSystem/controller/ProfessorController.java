@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 //@RequestMapping("/management")
+@CrossOrigin(origins="http://localhost:3000")
 public class ProfessorController {
 
     @Autowired
