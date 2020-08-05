@@ -1,6 +1,7 @@
 package com.baboci.UniversityManagementSystem.model;
 
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;

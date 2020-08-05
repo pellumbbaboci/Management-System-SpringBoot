@@ -20,7 +20,6 @@ public class Professor {
     @Column(name = "professor_dep")
     private String department;
 
-
     @OneToMany(mappedBy="professorID",
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     private List<Course> courseList;

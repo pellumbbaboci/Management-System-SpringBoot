@@ -26,13 +26,11 @@ public class CourseController {
 
     @GetMapping("/getById_course/{id}")
     public Course get(@PathVariable int id){
-
         Course courseObj = courseService.get(id);
         if(courseObj == null){
             throw new RuntimeException("There is no course object");
         }
         return courseObj;
-
     }
 
     @DeleteMapping("/delete_course/{id}")
@@ -42,11 +40,9 @@ public class CourseController {
     }
 
     @PutMapping("/update_course")
-
     public Course update(@RequestBody Course courseObj){
         courseService.save(courseObj);
         return courseObj;
-
     }
 
 }
