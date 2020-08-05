@@ -16,12 +16,15 @@ class ProfessorList extends React.Component {
     }
 
     componentDidMount() {
+        this.findAllProfessors();
+    }
+
+    findAllProfessors(){
         axios.get("http://localhost:8080/list_professor")
             .then(response => response.data)
-             .then((data)=> {
-                 this.setState({professors:data})
-             });
-
+            .then((data)=> {
+                this.setState({professors:data})
+            });
     }
 
 
@@ -39,6 +42,7 @@ class ProfessorList extends React.Component {
                             <th>Name</th>
                             <th>Gender</th>
                             <th>Department</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
