@@ -62,7 +62,7 @@ class Professor extends Component {
 
             <div>
                 <div style={{"display":this.state.show ? "block": "none"}}>
-                    <MyToast show = {this.state.show} message = {"Professor Saved Successfully."}/>
+                    <MyToast show = {this.state.show} message = {"Professor Saved Successfully."} type = {"success"}/>
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header><FontAwesomeIcon icon={faPlusSquare} /> Add Professor</Card.Header>
