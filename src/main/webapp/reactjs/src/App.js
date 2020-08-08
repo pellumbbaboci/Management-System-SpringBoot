@@ -27,6 +27,7 @@ function App() {
                      <Switch>
                          <Route path="/" exact component={Welcome}/>
                          <Route path="/add" exact component={Professor}/>
+                         <Route path="/edit/:id" exact component={Professor}/>
                          <Route path="/list" exact component={ProfessorList}/>
                      </Switch>
                     {/*<Welcome/>*/}

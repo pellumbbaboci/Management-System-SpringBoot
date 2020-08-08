@@ -8,8 +8,8 @@ class NavigationBar extends Component {
 
            <Navbar bg="dark" variant="dark">
                <Link to={""} className="navbar-brand">
-                   <img src="https://image.flaticon.com/icons/svg/1157/1157044.svg" width="25" height="25" alt="brand"/>
-                   University Management system
+                   <img src="https://image.flaticon.com/icons/svg/1157/1157044.svg" width="25" height="25" alt="brand"/>{' '}
+                    University Management system
                </Link>
 
                <Nav className="mr-auto">
@@ -17,6 +17,7 @@ class NavigationBar extends Component {
                    {/*<Link to={""} className="navbar-link">Add Student</Link>*/}
                    {/*<Link to={""} className="navbar-link">Add Course</Link>*/}
                    <Link to={"add"} className="navbar-link">Add Professor </Link>{' '}
+
                    <Link to={"list"} className="navbar-link"> List Professor</Link>
                </Nav>
 

@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faList,faTrash,faEdit} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import MyToast from "../MyToast";
+import {Link} from "react-router-dom";
 
 
 class ProfessorList extends React.Component {
@@ -44,7 +45,6 @@ class ProfessorList extends React.Component {
             });
     };
 
-
     render() {
         return (
             <div>
@@ -81,8 +81,8 @@ class ProfessorList extends React.Component {
 
                                     <td>
                                         <ButtonGroup>
-                                            <Button size="sm" variant="outline-primary" ><FontAwesomeIcon icon={faEdit} /> </Button>{''}
-                                            <Button size="sm" variant="outline-danger" onClick={this.deleteProfessor.bind(this,professor.id)}><FontAwesomeIcon icon={faTrash} /> </Button>
+                                            <Link to={"edit/"+professor.id} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit} /></Link>{' '}
+                                            <Button size="sm" variant="outline-danger" onClick={this.deleteProfessor.bind(this, professor.id)}><FontAwesomeIcon icon={faTrash} /> </Button>
                                         </ButtonGroup>
                                     </td>
                                 </tr>

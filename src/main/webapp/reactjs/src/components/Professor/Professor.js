@@ -2,7 +2,7 @@ import React, {Component}from 'react';
 import {white} from "color-name";
 import {Card,Table,Form,Button,Col} from "react-bootstrap";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faList,faSave,faPlusSquare,faUndo} from '@fortawesome/free-solid-svg-icons';
+import {faList, faSave, faPlusSquare, faUndo, faEdit} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import MyToast from "../MyToast";
 
@@ -12,15 +12,66 @@ class Professor extends Component {
         super(props);
         this.state = this.initialState;
         this.state.show = false;
+        this.state.method = "";
         this.submitProfessor = this.submitProfessor.bind(this);
         this.professorChange = this.professorChange.bind(this);
     }
 
     initialState = {
-       name:'', gender:'', department:''
+       id:'',name:'', gender:'', department:''
+    };
+
+    componentDidMount() {
+        const professorID = this.props.match.params.id;
+        if (professorID){
+            this.findProfessorByID(professorID);
+        }
     }
 
-    submitProfessor = event =>{
+    findProfessorByID = (professorID) => {
+        axios.get("http://localhost:8080/getById_professor/"+professorID)
+            .then(response => {
+               if (response.data != null){
+                   this.setState({
+                       id: response.data.id,
+                       name: response.data.name,
+                       gender: response.data.gender,
+                       department: response.data.department
+                   });
+               }
+            }).catch((error) => {
+                    console.error("Error"+error);
+            });
+
+    };
+
+    updateProfessor = event => {
+        event.preventDefault();
+
+        const professor = {
+            id: this.state.id,
+            name: this.state.name,
+            gender: this.state.gender,
+            department: this.state.department
+        };
+
+        axios.put("http://localhost:8080/update_professor", professor)
+            .then(response => {
+                if (response.data != null){
+                    this.setState({"show":true,"method":"put"});
+                    setTimeout(() =>  this.setState({"show":false}), 2000);
+                    setTimeout(() =>  this.professorList(), 2000);
+                }else{
+                    this.setState({"show":false});
+                }
+            });
+
+        this.setState(this.initialState);
+
+    };
+
+
+    submitProfessor = event => {
         event.preventDefault();
 
         const professor = {
@@ -32,7 +83,7 @@ class Professor extends Component {
         axios.post("http://localhost:8080/save_professor", professor)
              .then(response => {
                 if (response.data != null){
-                    this.setState({"show":true});
+                    this.setState({"show":true,"method":"put"});
                     setTimeout(() =>  this.setState({"show":false}), 3000);
                 }else{
                     this.setState({"show":false});
@@ -41,18 +92,22 @@ class Professor extends Component {
 
         this.setState(this.initialState);
 
-    }
+    };
 
     professorChange = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
 
-    }
+    };
 
     resetProfessor = () => {
         this.setState(()=>this.initialState);
-    }
+    };
+
+    professorList = () => {
+        return this.props.history.push("/list");
+    };
 
     render() {
 
@@ -62,11 +117,11 @@ class Professor extends Component {
 
             <div>
                 <div style={{"display":this.state.show ? "block": "none"}}>
-                    <MyToast show = {this.state.show} message = {"Professor Saved Successfully."} type = {"success"}/>
+                    <MyToast show = {this.state.show} message = {this.state.method === "put" ? "Professor Updated Successfully":"Professor Saved Successfully."} type = {"success"}/>
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
-                    <Card.Header><FontAwesomeIcon icon={faPlusSquare} /> Add Professor</Card.Header>
-                    <Form onReset={this.resetProfessor} onSubmit={this.submitProfessor} id="profFormID">
+                    <Card.Header><FontAwesomeIcon icon={this.state.id ? faEdit : faPlusSquare} /> {this.state.id ? "Update Professor" : "Add Professor"}</Card.Header>
+                    <Form onReset={this.resetProfessor} onSubmit={this.state.id ? this.updateProfessor : this.submitProfessor} id="profFormID">
                         <Card.Body>
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridName">
@@ -100,10 +155,13 @@ class Professor extends Component {
                         </Card.Body>
                         <Card.Footer style={{"textAlign":"right"}}>
                             <Button size="sm" variant="success" type="submit">
-                                <FontAwesomeIcon icon={faSave} /> Submit
+                                <FontAwesomeIcon icon={faSave} /> {this.state.id ? "Update" : "Save"}
                             </Button>{' '}
                             <Button size="sm" variant="info" type="reset">
                                 <FontAwesomeIcon icon={faUndo} /> Reset
+                            </Button>{' '}
+                            <Button size="sm" variant="info" type="button" onClick={this.professorList.bind()}>
+                                <FontAwesomeIcon icon={faList} /> Professor List
                             </Button>
                         </Card.Footer>
                     </Form>
