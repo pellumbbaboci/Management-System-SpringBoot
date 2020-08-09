@@ -1,3 +1,5 @@
 # Management-System-SpringBoot
 
-This project is bulid for learning purpose.
+This project is build for learning purpose.
+
+ongoing...
