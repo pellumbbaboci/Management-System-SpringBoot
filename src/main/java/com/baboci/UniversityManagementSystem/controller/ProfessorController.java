@@ -47,6 +47,13 @@ public class ProfessorController {
         professorService.save(professorObj);
         return professorObj;
     }
+    @GetMapping("/search_professor/{name}")
+    public List<Professor> searchByName(@PathVariable String name){
+        List<Professor> professors = professorService.searchByName(name);
+        if (professors == null)
+            throw  new RuntimeException("There is no Professor with searched criteria");
+        return professors;
+    }
 
 
 }

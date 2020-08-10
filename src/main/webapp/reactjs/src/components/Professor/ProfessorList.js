@@ -1,8 +1,8 @@
 import React from 'react';
 import {white} from "color-name";
-import {Card,Table,Button, ButtonGroup} from "react-bootstrap";
+import {Card,Table,Button, ButtonGroup,InputGroup,FormControl} from "react-bootstrap";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faList,faTrash,faEdit} from '@fortawesome/free-solid-svg-icons';
+import {faList,faTrash,faEdit,faSearch,faTimes} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import MyToast from "../MyToast";
 import {Link} from "react-router-dom";
@@ -14,7 +14,8 @@ class ProfessorList extends React.Component {
         super(props, context);
 
         this.state = {
-            professors : []
+            professors : [],
+            search : ''
         };
         this.state.show = false;
     }
@@ -45,7 +46,31 @@ class ProfessorList extends React.Component {
             });
     };
 
+    searchChange = event => {
+        this.setState({
+            [event.target.name] : event.target.value
+        });
+    };
+
+    cancelSearch = () => {
+        this.setState({"search" : ''});
+        this.findAllProfessors();
+    };
+
+    searchData = () => {
+        axios.get("http://localhost:8080/search_professor/"+this.state.search)
+            .then(response => response.data)
+            .then((data) => {
+                this.setState({
+                    professors: data,
+                    //add pagination
+                });
+            });
+    };
+
     render() {
+        const {professors, search} = this.state;
+
         return (
             <div>
                 <div style={{"display":this.state.show ? "block": "none"}}>
@@ -53,7 +78,29 @@ class ProfessorList extends React.Component {
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
 
-                    <Card.Header> <FontAwesomeIcon icon={faList} /> Professor List</Card.Header>
+                    <Card.Header>
+
+                        <div style={{"float":"left"}}>
+                            <FontAwesomeIcon icon={faList} /> Professor List
+                        </div>
+                        <div style={{"float":"right"}}>
+                            <InputGroup size="sm">
+                                <FormControl placeholder="Search" name="search" value={search}
+                                             className={"info-border bg-dark text-white"}
+                                              onChange={this.searchChange}
+                                    />
+                                <InputGroup.Append>
+                                    <Button size="sm" variant="outline-info" type="button" onClick={this.searchData}>
+                                        <FontAwesomeIcon icon={faSearch}/>
+                                    </Button>
+                                    <Button size="sm" variant="outline-danger" type="button" onClick={this.cancelSearch}>
+                                        <FontAwesomeIcon icon={faTimes} />
+                                    </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </div>
+
+                    </Card.Header>
                     <Card.Body>
 
                         <Table striped bordered hover variant="dark">
@@ -68,11 +115,11 @@ class ProfessorList extends React.Component {
                             </thead>
                             <tbody>
                             {
-                                this.state.professors.length === 0 ?
+                                professors.length === 0 ?
                                 <tr align="center">
                                     <td colSpan="7">No Professors Available.</td>
                                 </tr> :
-                                this.state.professors.map((professor) => (
+                                professors.map((professor) => (
                                 <tr key={professor.id}>
                                     <td>{professor.id}</td>
                                     <td>{professor.name}</td>

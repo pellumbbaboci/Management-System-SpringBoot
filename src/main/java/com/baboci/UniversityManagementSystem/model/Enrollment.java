@@ -1,5 +1,8 @@
 package com.baboci.UniversityManagementSystem.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +13,8 @@ enum Grade{
 
 @Entity
 @Table(name = "tbl_enrollment")
+@Getter
+@Setter
 public class Enrollment {
 
     @Id
@@ -27,39 +32,6 @@ public class Enrollment {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name="student_id")
     private Student studentID;
-
-
-    public Course getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(Course courseID) {
-        this.courseID = courseID;
-    }
-
-    public Student getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(Student studentID) {
-        this.studentID = studentID;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Grade getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Grade grade) {
-        this.grade = grade;
-    }
 
     @Override
     public String toString(){

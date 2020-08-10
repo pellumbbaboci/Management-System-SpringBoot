@@ -83,7 +83,7 @@ class Professor extends Component {
         axios.post("http://localhost:8080/save_professor", professor)
              .then(response => {
                 if (response.data != null){
-                    this.setState({"show":true,"method":"put"});
+                    this.setState({"show":true,"method":"post"});
                     setTimeout(() =>  this.setState({"show":false}), 3000);
                 }else{
                     this.setState({"show":false});
@@ -106,7 +106,7 @@ class Professor extends Component {
     };
 
     professorList = () => {
-        return this.props.history.push("/list");
+        return this.props.history.push("/professors");
     };
 
     render() {

@@ -38,4 +38,9 @@ public class ProfessorServiceImpl implements ProfessorService {
     public void delete(int id) {
         professorDAO.delete(id);
     }
+
+    @Override
+    public List<Professor> searchByName(String name) {
+        return professorDAO.searchByName(name);
+    }
 }

@@ -12,5 +12,6 @@ public interface ProfessorService {
     Professor get(int id);
     List<Professor> get();
     void delete (int id);
+    List<Professor> searchByName(String name);
 
 }
