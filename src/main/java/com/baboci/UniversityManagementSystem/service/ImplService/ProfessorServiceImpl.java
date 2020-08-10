@@ -40,7 +40,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public List<Professor> searchByName(String name) {
-        return professorDAO.searchByName(name);
+    public List<Professor> search(String keyword) {
+        return professorDAO.search(keyword);
     }
 }

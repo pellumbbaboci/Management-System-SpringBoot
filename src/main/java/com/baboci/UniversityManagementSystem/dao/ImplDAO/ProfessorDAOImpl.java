@@ -5,6 +5,7 @@ import com.baboci.UniversityManagementSystem.model.Professor;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -51,10 +52,15 @@ public class ProfessorDAOImpl implements ProfessorDAO {
     }
 
     @Override
-    public List<Professor> searchByName(String name) {
+    public List<Professor> search(String keyword) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Professor> query = currentSession.createQuery("from Professor p where p.name = :name", Professor.class)
-                .setParameter("name",name);
+//        Query<Professor> query = currentSession.createQuery("from Professor p where p.name = :name ", Professor.class)
+//        .setParameter("name",name);
+                Query<Professor> query = currentSession.createQuery("FROM Professor p WHERE p.name LIKE :nameprof OR p.gender LIKE :gender OR p.department LIKE :dep ", Professor.class)
+                        .setParameter("nameprof","%"+keyword+"%")
+                        .setParameter("dep","%"+keyword+"%")
+                        .setParameter("gender","%"+keyword+"%");
+
         List<Professor> list = query.getResultList();
         return list;
     }
