@@ -39,6 +39,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         professorDAO.delete(id);
     }
 
+    @Transactional
     @Override
     public List<Professor> search(String keyword) {
         return professorDAO.search(keyword);

@@ -26,8 +26,6 @@ public class Student {
     private String gender;
     @Column(name = "student_dep")
     private String department;
-    @Column(name = "student_dateOfReg")
-    private Date dateOfRegistration;
 
     @OneToMany(mappedBy="studentID",
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})

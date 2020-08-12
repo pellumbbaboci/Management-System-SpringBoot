@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+
+@CrossOrigin(origins="http://localhost:3000")
 public class StudentController {
 
     @Autowired
@@ -24,7 +26,7 @@ public class StudentController {
         return studentService.get();
     }
 
-    @GetMapping("/getById_student")
+    @GetMapping("/getById_student/{id}")
     public Student get(@PathVariable int id) {
         Student studentObj = studentService.get(id);
         if(studentObj == null){
@@ -33,16 +35,24 @@ public class StudentController {
         return studentObj;
     }
 
-    @DeleteMapping("/delete_student")
-    public String delete(int id){
+    @DeleteMapping("/delete_student/{id}")
+    public String delete(@PathVariable int id){
         studentService.delete(id);
         return "Student Deleted with id: "+id;
     }
 
     @PutMapping("/update_student")
-    public Student update(Student studentObj){
+    public Student update(@RequestBody Student studentObj){
         studentService.save(studentObj);
         return studentObj;
+    }
+
+    @GetMapping("/search_student/{keyword}")
+    public List<Student> search(@PathVariable String keyword){
+        List<Student> students = studentService.search(keyword);
+        if (students == null)
+            throw  new RuntimeException("There is no students with searched criteria");
+        return students;
     }
 
 }

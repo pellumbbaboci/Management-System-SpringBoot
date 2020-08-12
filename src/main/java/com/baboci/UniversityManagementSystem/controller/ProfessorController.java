@@ -48,7 +48,7 @@ public class ProfessorController {
         return professorObj;
     }
     @GetMapping("/search_professor/{keyword}")
-    public List<Professor> searchByName(@PathVariable String keyword){
+    public List<Professor> search(@PathVariable String keyword){
         List<Professor> professors = professorService.search(keyword);
         if (professors == null)
             throw  new RuntimeException("There is no Professor with searched criteria");

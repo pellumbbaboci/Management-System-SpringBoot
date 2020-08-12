@@ -9,4 +9,5 @@ public interface StudentDAO {
     Student get(int id);
     List<Student> get();
     void delete (int id);
+    List<Student> search(String keyword);
 }

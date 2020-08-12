@@ -38,4 +38,10 @@ public class StudentServiceImpl implements StudentService {
     public void delete(int id) {
         studentDAO.delete(id);
     }
+
+    @Transactional
+    @Override
+    public List<Student> search(String keyword) {
+        return studentDAO.search(keyword);
+    }
 }

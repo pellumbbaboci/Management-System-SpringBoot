@@ -8,37 +8,37 @@ import MyToast from "../MyToast";
 import {Link} from "react-router-dom";
 
 
-class ProfessorList extends React.Component {
+class StudentList extends React.Component {
 
     constructor(props, context) {
         super(props, context);
 
         this.state = {
-            professors : [],
+            students : [],
             search : ''
         };
         this.state.show = false;
     }
 
     componentDidMount() {
-        this.findAllProfessors();
+        this.findAllStudents();
     }
 
-    findAllProfessors(){
-        axios.get("http://localhost:8080/list_professor")
+    findAllStudents(){
+        axios.get("http://localhost:8080/list_student")
             .then(response => response.data)
             .then((data)=> {
-                this.setState({professors:data})
+                this.setState({students:data})
             });
     }
 
-    deleteProfessor = (profID) => {
-        axios.delete("http://localhost:8080/delete_professor/"+profID)
+    deleteStudent = (studentID) => {
+        axios.delete("http://localhost:8080/delete_student/"+studentID)
             .then(response => {
                 if (response.data != null ){
 
                     this.setState({
-                        professors: this.state.professors.filter(professor => professor.id !== profID)
+                        students: this.state.students.filter(student => student.id !== studentID)
                     })
                     this.setState({"show":true});
                     setTimeout(() =>  this.setState({"show":false}), 3000);
@@ -54,34 +54,34 @@ class ProfessorList extends React.Component {
 
     cancelSearch = () => {
         this.setState({"search" : ''});
-        this.findAllProfessors();
+        this.findAllStudents();
     };
 
     searchData = () => {
-        axios.get("http://localhost:8080/search_professor/"+this.state.search)
+        axios.get("http://localhost:8080/search_student/"+this.state.search)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    professors: data,
+                    students: data,
                     //add pagination
                 });
             });
     };
 
     render() {
-        const {professors, search} = this.state;
+        const {students , search} = this.state;
 
         return (
             <div>
                 <div style={{"display":this.state.show ? "block": "none"}}>
-                    <MyToast show = {this.state.show} message = {"Professor Deleted Successfully."} type = {"danger"}/>
+                    <MyToast show = {this.state.show} message = {"Student Deleted Successfully."} type = {"danger"}/>
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
 
                     <Card.Header>
 
                         <div style={{"float":"left"}}>
-                            <FontAwesomeIcon icon={faList} /> Professor List
+                            <FontAwesomeIcon icon={faList} /> Student List
                         </div>
                         <div style={{"float":"right"}}>
                             <InputGroup size="sm">
@@ -115,21 +115,21 @@ class ProfessorList extends React.Component {
                             </thead>
                             <tbody>
                             {
-                                professors.length === 0 ?
+                                students.length === 0 ?
                                 <tr align="center">
-                                    <td colSpan="7">No Professors Available.</td>
+                                    <td colSpan="7">No Student Available.</td>
                                 </tr> :
-                                professors.map((professor) => (
-                                <tr key={professor.id}>
-                                    <td>{professor.id}</td>
-                                    <td>{professor.name}</td>
-                                    <td>{professor.gender}</td>
-                                    <td>{professor.department}</td>
+                                    students.map((student) => (
+                                <tr key={student.id}>
+                                    <td>{student.id}</td>
+                                    <td>{student.name}</td>
+                                    <td>{student.gender}</td>
+                                    <td>{student.department}</td>
 
                                     <td>
                                         <ButtonGroup>
-                                            <Link to={"edit-professor/"+professor.id} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit} /></Link>{' '}
-                                            <Button size="sm" variant="outline-danger" onClick={this.deleteProfessor.bind(this, professor.id)}><FontAwesomeIcon icon={faTrash} /> </Button>
+                                            <Link to={"edit-student/"+student.id} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit} /></Link>{' '}
+                                            <Button size="sm" variant="outline-danger" onClick={this.deleteStudent.bind(this, student.id)}><FontAwesomeIcon icon={faTrash} /> </Button>
                                         </ButtonGroup>
                                     </td>
                                 </tr>
@@ -144,4 +144,4 @@ class ProfessorList extends React.Component {
     }
 }
 
-export default ProfessorList;
+export default StudentList;

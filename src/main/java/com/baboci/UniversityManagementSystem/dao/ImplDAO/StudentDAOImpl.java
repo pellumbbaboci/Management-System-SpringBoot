@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import org.hibernate.query.Query;
 import java.util.List;
 
 @Repository
@@ -32,7 +32,7 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public List<Student> get() {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query query = currentSession.createQuery("from Course", Student.class);
+        Query query = currentSession.createQuery("from Student", Student.class);
         List<Student> list = query.getResultList();
         return list;
     }
@@ -42,5 +42,17 @@ public class StudentDAOImpl implements StudentDAO {
         Session currentSession = entityManager.unwrap(Session.class);
         Student studentObj = currentSession.get(Student.class, id);
         currentSession.delete(studentObj);
+    }
+
+    @Override
+    public List<Student> search(String keyword) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<Student> query = currentSession.createQuery("FROM Student s WHERE s.name LIKE :namestudent OR s.gender LIKE :gender OR s.department LIKE :dep ", Student.class)
+                .setParameter("namestudent","%"+keyword+"%")
+                .setParameter("dep","%"+keyword+"%")
+                .setParameter("gender","%"+keyword+"%");
+
+        List<Student> list = query.getResultList();
+        return list;
     }
 }

@@ -20,6 +20,8 @@ class NavigationBar extends Component {
                    <Link to={"professors"} className="nav-link"> List Professor</Link>{'  '}
                    <Link to={"add-course"} className="nav-link">Add Course </Link>
                    <Link to={"courses"} className="nav-link"> List Courses</Link>
+                   <Link to={"add-student"} className="nav-link">Add Student </Link>
+                   <Link to={"students"} className="nav-link"> List Student</Link>
 
                </Nav>
 

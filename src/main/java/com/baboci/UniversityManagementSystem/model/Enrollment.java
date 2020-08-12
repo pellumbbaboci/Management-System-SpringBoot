@@ -25,6 +25,9 @@ public class Enrollment {
     @Column(name = "grade")
     private Grade grade;
 
+    @Column(name = "student_dateOfReg")
+    private Date dateOfRegistration;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name="course_id")
     private Course courseID;
