@@ -60,7 +60,7 @@ class Student extends Component {
                 if (response.data != null){
                     this.setState({"show":true,"method":"put"});
                     setTimeout(() =>  this.setState({"show":false}), 2000);
-                    setTimeout(() =>  this.studentList(), 2000);
+                    setTimeout(() =>  this.studentList(), 1000);
                 }else{
                     this.setState({"show":false});
                 }

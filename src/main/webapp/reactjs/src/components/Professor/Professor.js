@@ -29,21 +29,39 @@ class Professor extends Component {
     }
 
     findProfessorByID = (professorID) => {
-        axios.get("http://localhost:8080/getById_professor/"+professorID)
+        fetch("http://localhost:8080/getById_professor/"+professorID)
+            .then(response => response.json())
             .then(response => {
-               if (response.data != null){
-                   this.setState({
-                       id: response.data.id,
-                       name: response.data.name,
-                       gender: response.data.gender,
-                       department: response.data.department
-                   });
-               }
+                if (response){
+                    this.setState({
+                        id: response.id,
+                        name: response.name,
+                        gender: response.gender,
+                        department: response.department
+                    });
+                }
             }).catch((error) => {
-                    console.error("Error"+error);
-            });
+            console.error("Error"+error);
+        });
 
     };
+
+    // findProfessorByID = (professorID) => {
+    //     axios.get("http://localhost:8080/getById_professor/"+professorID)
+    //         .then(response => {
+    //            if (response.data != null){
+    //                this.setState({
+    //                    id: response.data.id,
+    //                    name: response.data.name,
+    //                    gender: response.data.gender,
+    //                    department: response.data.department
+    //                });
+    //            }
+    //         }).catch((error) => {
+    //                 console.error("Error"+error);
+    //         });
+    //
+    // };
 
     updateProfessor = event => {
         event.preventDefault();
@@ -60,7 +78,7 @@ class Professor extends Component {
                 if (response.data != null){
                     this.setState({"show":true,"method":"put"});
                     setTimeout(() =>  this.setState({"show":false}), 2000);
-                    setTimeout(() =>  this.professorList(), 2000);
+                    setTimeout(() =>  this.professorList(), 1000);
                 }else{
                     this.setState({"show":false});
                 }

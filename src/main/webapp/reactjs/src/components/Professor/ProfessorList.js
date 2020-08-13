@@ -28,7 +28,7 @@ class ProfessorList extends React.Component {
         axios.get("http://localhost:8080/list_professor")
             .then(response => response.data)
             .then((data)=> {
-                this.setState({professors:data})
+                this.setState({professors:data.content})
             });
     }
 

@@ -3,6 +3,8 @@ package com.baboci.UniversityManagementSystem.controller;
 import com.baboci.UniversityManagementSystem.model.Student;
 import com.baboci.UniversityManagementSystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +24,8 @@ public class StudentController {
     }
 
     @GetMapping("/list_student")
-    public List<Student> get(){
-        return studentService.get();
+    public Page<Student> get(Pageable pageable){
+        return studentService.get(pageable);
     }
 
     @GetMapping("/getById_student/{id}")

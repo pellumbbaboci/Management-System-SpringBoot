@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Service
@@ -29,8 +31,8 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     @Transactional
     @Override
-    public List<Professor> get() {
-        return professorDAO.get();
+    public Page<Professor> get(Pageable pageable) {
+        return professorDAO.get(pageable);
     }
 
     @Transactional

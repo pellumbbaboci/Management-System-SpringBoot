@@ -4,6 +4,8 @@ import com.baboci.UniversityManagementSystem.dao.StudentDAO;
 import com.baboci.UniversityManagementSystem.model.Student;
 import com.baboci.UniversityManagementSystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +31,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Transactional
     @Override
-    public List<Student> get() {
-        return studentDAO.get();
+    public Page<Student> get(Pageable pageable) {
+        return studentDAO.get(pageable);
     }
 
     @Transactional

@@ -3,6 +3,8 @@ package com.baboci.UniversityManagementSystem.controller;
 import com.baboci.UniversityManagementSystem.model.Professor;
 import com.baboci.UniversityManagementSystem.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,8 @@ public class ProfessorController {
     }
 
     @GetMapping("/list_professor")
-    public List<Professor> get(){
-        return professorService.get();
+    public Page<Professor> get(Pageable pageable){
+        return professorService.get(pageable);
     }
 
     @GetMapping("/getById_professor/{id}")

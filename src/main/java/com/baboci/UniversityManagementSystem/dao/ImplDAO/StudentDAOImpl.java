@@ -1,14 +1,20 @@
 package com.baboci.UniversityManagementSystem.dao.ImplDAO;
 
 import com.baboci.UniversityManagementSystem.dao.StudentDAO;
+import com.baboci.UniversityManagementSystem.model.Professor;
 import com.baboci.UniversityManagementSystem.model.Student;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import org.hibernate.query.Query;
 import java.util.List;
+
+import static com.baboci.UniversityManagementSystem.dao.ImplDAO.ProfessorDAOImpl.getPage;
 
 @Repository
 public class StudentDAOImpl implements StudentDAO {
@@ -30,11 +36,18 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public List<Student> get() {
+    public Page<Student> get(Pageable pageable) {
         Session currentSession = entityManager.unwrap(Session.class);
         Query query = currentSession.createQuery("from Student", Student.class);
         List<Student> list = query.getResultList();
-        return list;
+
+        Page<Student> studentsPage = toPage(list,pageable);
+
+        return studentsPage;
+    }
+
+    private Page toPage(List list, Pageable pageable) {
+        return getPage(list, pageable);
     }
 
     @Override

@@ -28,7 +28,7 @@ class StudentList extends React.Component {
         axios.get("http://localhost:8080/list_student")
             .then(response => response.data)
             .then((data)=> {
-                this.setState({students:data})
+                this.setState({students:data.content})
             });
     }
 
@@ -62,8 +62,7 @@ class StudentList extends React.Component {
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    students: data,
-                    //add pagination
+                    students: data
                 });
             });
     };
