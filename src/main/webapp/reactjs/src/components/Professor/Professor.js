@@ -46,8 +46,8 @@ class Professor extends Component {
 
     };
 
-    // findProfessorByID = (professorID) => {
-    //     axios.get("http://localhost:8080/getById_professor/"+professorID)
+    // findProfessorByID = (prof_id) => {
+    //     axios.get("http://localhost:8080/getById_professor/"+prof_id)
     //         .then(response => {
     //            if (response.data != null){
     //                this.setState({

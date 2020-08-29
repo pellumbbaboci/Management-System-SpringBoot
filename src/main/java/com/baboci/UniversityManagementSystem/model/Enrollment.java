@@ -36,6 +36,17 @@ public class Enrollment {
     @JoinColumn(name="student_id")
     private Student studentID;
 
+    public Enrollment(){
+
+    }
+
+    public Enrollment(Grade grade, Date dateOfRegistration, Course courseID, Student studentID) {
+        this.grade = grade;
+        this.dateOfRegistration = dateOfRegistration;
+        this.courseID = courseID;
+        this.studentID = studentID;
+    }
+
     @Override
     public String toString(){
         return "Enrollment [id=" + id + ", Course ID=" + courseID +

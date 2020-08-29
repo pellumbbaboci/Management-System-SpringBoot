@@ -6,37 +6,37 @@ import {faList, faSave, faPlusSquare, faUndo, faEdit} from '@fortawesome/free-so
 import axios from 'axios';
 import MyToast from "../MyToast";
 
-class Student extends Component {
+class Course extends Component {
 
     constructor(props) {
         super(props);
         this.state = this.initialState;
         this.state.show = false;
         this.state.method = "";
-        this.submitStudent = this.submitStudent.bind(this);
-        this.studentChange = this.studentChange.bind(this);
+        this.submitCourse = this.submitCourse.bind(this);
+        this.courseChange = this.courseChange.bind(this);
     }
 
     initialState = {
-       id:'',name:'', gender:'', department:''
+       id:'',courseName:'', department:'', prof_id:''
     };
 
     componentDidMount() {
-        const studentID = this.props.match.params.id;
-        if (studentID){
-            this.findStudentByID(studentID);
+        const courseID = this.props.match.params.id;
+        if (courseID){
+            this.findCourseByID(courseID);
         }
     }
 
-    findStudentByID = (studentID) => {
-        axios.get("http://localhost:8080/getById_student/"+studentID)
+    findCourseByID = (courseID) => {
+        axios.get("http://localhost:8080/getById_course/"+courseID)
             .then(response => {
                if (response.data != null){
                    this.setState({
                        id: response.data.id,
-                       name: response.data.name,
-                       gender: response.data.gender,
-                       department: response.data.department
+                       courseName: response.data.courseName,
+                       department: response.data.department,
+                       prof_id: response.data.prof_id
                    });
                }
             }).catch((error) => {
@@ -45,22 +45,22 @@ class Student extends Component {
 
     };
 
-    updateStudent = event => {
+    updateCourse = event => {
         event.preventDefault();
 
-        const student = {
+        const course = {
             id: this.state.id,
-            name: this.state.name,
-            gender: this.state.gender,
-            department: this.state.department
+            courseName: this.state.courseName,
+            department: this.state.department,
+            prof_id: this.state.prof_id
         };
 
-        axios.put("http://localhost:8080/update_student", student)
+        axios.put("http://localhost:8080/update_course/under/"+this.state.prof_id, course)
             .then(response => {
                 if (response.data != null){
                     this.setState({"show":true,"method":"put"});
                     setTimeout(() =>  this.setState({"show":false}), 2000);
-                    setTimeout(() =>  this.studentList(), 1000);
+                    setTimeout(() =>  this.courseList(), 1000);
                 }else{
                     this.setState({"show":false});
                 }
@@ -71,16 +71,16 @@ class Student extends Component {
     };
 
 
-    submitStudent = event => {
+    submitCourse = event => {
         event.preventDefault();
 
-        const student = {
-            name: this.state.name,
-            gender: this.state.gender,
-            department: this.state.department
+        const course = {
+            courseName: this.state.courseName,
+            department: this.state.department,
+            prof_id: this.state.prof_id
         };
 
-        axios.post("http://localhost:8080/save_student", student)
+        axios.post("http://localhost:8080/save_course/under/"+this.state.prof_id, course)
              .then(response => {
                 if (response.data != null){
                     this.setState({"show":true,"method":"post"});
@@ -94,62 +94,62 @@ class Student extends Component {
 
     };
 
-    studentChange = event => {
+    courseChange = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
 
     };
 
-    resetStudent = () => {
+    resetCourse = () => {
         this.setState(()=>this.initialState);
     };
 
-    studentList = () => {
-        return this.props.history.push("/students");
+    courseList = () => {
+        return this.props.history.push("/courses");
     };
 
     render() {
 
-        const {name,gender,department} = this.state
+        const {courseName,department,prof_id} = this.state;
 
         return (
 
             <div>
                 <div style={{"display":this.state.show ? "block": "none"}}>
-                    <MyToast show = {this.state.show} message = {this.state.method === "put" ? "Student Updated Successfully":"Student Saved Successfully."} type = {"success"}/>
+                    <MyToast show = {this.state.show} message = {this.state.method === "put" ? "Course Updated Successfully":"Course Saved Successfully."} type = {"success"}/>
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
-                    <Card.Header><FontAwesomeIcon icon={this.state.id ? faEdit : faPlusSquare} /> {this.state.id ? "Update Student" : "Add Student"}</Card.Header>
-                    <Form onReset={this.resetStudent} onSubmit={this.state.id ? this.updateStudent : this.submitStudent} id="studentFormID">
+                    <Card.Header><FontAwesomeIcon icon={this.state.id ? faEdit : faPlusSquare} /> {this.state.id ? "Update Course" : "Add Course"}</Card.Header>
+                    <Form onReset={this.resetCourse} onSubmit={this.state.id ? this.updateCourse : this.submitCourse} id="courseFormID">
                         <Card.Body>
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridName">
-                                    <Form.Label>Name</Form.Label>
+                                    <Form.Label>Course Name</Form.Label>
                                     <Form.Control required autoComplete="off"
-                                                  type="text" name="name"
-                                                  value={name}
-                                                  onChange={this.studentChange}
+                                                  type="text" name="courseName"
+                                                  value={courseName}
+                                                  onChange={this.courseChange}
                                                   className="bg-dark text-white"
                                                   placeholder="Enter Full Name" />
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formGridGender">
-                                    <Form.Label>Gender</Form.Label>
-                                    <Form.Control required autoComplete="off"
-                                                  type="text" name="gender"
-                                                  value={gender}
-                                                  onChange={this.studentChange}
-                                                  className="bg-dark text-white"
-                                                  placeholder="Enter Gender" />
-                                </Form.Group>
-                                <Form.Group as={Col} controlId="formGridDepartment">
                                     <Form.Label>Department</Form.Label>
                                     <Form.Control required autoComplete="off"
                                                   type="text" name="department"
                                                   value={department}
-                                                  onChange={this.studentChange}
+                                                  onChange={this.courseChange}
                                                   className="bg-dark text-white"
                                                   placeholder="Enter Department" />
+                                </Form.Group>
+                                <Form.Group as={Col} controlId="formGridDepartment">
+                                    <Form.Label>Assigned Professor ID</Form.Label>
+                                    <Form.Control required autoComplete="off"
+                                                  type="text" name="prof_id"
+                                                  value={prof_id}
+                                                  onChange={this.courseChange}
+                                                  className="bg-dark text-white"
+                                                  placeholder="Enter Assigned Professor ID" />
                                 </Form.Group>
                             </Form.Row>
                         </Card.Body>
@@ -160,8 +160,8 @@ class Student extends Component {
                             <Button size="sm" variant="info" type="reset">
                                 <FontAwesomeIcon icon={faUndo} /> Reset
                             </Button>{' '}
-                            <Button size="sm" variant="info" type="button" onClick={this.studentList.bind()}>
-                                <FontAwesomeIcon icon={faList} /> Student List
+                            <Button size="sm" variant="info" type="button" onClick={this.courseList.bind()}>
+                                <FontAwesomeIcon icon={faList} /> Course List
                             </Button>
                         </Card.Footer>
                     </Form>
@@ -171,4 +171,4 @@ class Student extends Component {
     }
 }
 
-export default Student;
+export default Course;

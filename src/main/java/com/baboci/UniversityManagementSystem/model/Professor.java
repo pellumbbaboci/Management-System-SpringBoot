@@ -1,12 +1,12 @@
 package com.baboci.UniversityManagementSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "tbl_professor")
@@ -27,7 +27,19 @@ public class Professor {
 
     @OneToMany(mappedBy="professorID",
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
+    @JsonManagedReference
     private List<Course> courseList;
+
+    public Professor(){
+
+    }
+
+    public Professor(String name, String gender, String department, List<Course> courseList) {
+        this.name = name;
+        this.gender = gender;
+        this.department = department;
+        this.courseList = courseList;
+    }
 
     @Override
     public String toString(){

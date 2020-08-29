@@ -10,4 +10,5 @@ public interface CourseDAO {
     Course get(int id);
     List<Course> get();
     void delete (int id);
+    List<Course> search(String keyword);
 }

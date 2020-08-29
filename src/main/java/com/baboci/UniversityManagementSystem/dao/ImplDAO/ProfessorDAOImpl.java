@@ -24,11 +24,11 @@ public class ProfessorDAOImpl implements ProfessorDAO {
     @Autowired
     private EntityManager entityManager;
 
-    @Autowired
-    public ProfessorDAOImpl(EntityManager entityManager) {
-        super();
-        this.entityManager = entityManager;
-    }
+//    @Autowired
+//    public ProfessorDAOImpl(EntityManager entityManager) {
+//        super();
+//        this.entityManager = entityManager;
+//    }
 
     @Override
     public void save (Professor professor){

@@ -1,12 +1,15 @@
 package com.baboci.UniversityManagementSystem.service.ImplService;
 
 import com.baboci.UniversityManagementSystem.dao.CourseDAO;
+import com.baboci.UniversityManagementSystem.dao.ProfessorDAO;
 import com.baboci.UniversityManagementSystem.model.Course;
+import com.baboci.UniversityManagementSystem.model.Professor;
 import com.baboci.UniversityManagementSystem.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,6 +17,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseDAO courseDAO;
+
+    @Autowired
+    private ProfessorDAO professorDAO;
 
     @Transactional
     @Override
@@ -38,5 +44,12 @@ public class CourseServiceImpl implements CourseService {
     public void delete(int id) {
         courseDAO.delete(id);
     }
+
+    @Override
+    public List<Course> search(String keyword) {
+        return courseDAO.search(keyword);
+    }
+
+
 }
 

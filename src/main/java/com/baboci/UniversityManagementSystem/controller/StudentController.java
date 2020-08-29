@@ -53,7 +53,7 @@ public class StudentController {
     public List<Student> search(@PathVariable String keyword){
         List<Student> students = studentService.search(keyword);
         if (students == null)
-            throw  new RuntimeException("There is no students with searched criteria");
+            throw  new RuntimeException("There is no student with searched criteria");
         return students;
     }
 

@@ -32,7 +32,9 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public List<Course> get() {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Course> query = currentSession.createQuery("from Course", Course.class);
+        //Query<Course> query = currentSession.createNativeQuery("select * from tbl_course", Course.class);
+
+        Query<Course> query = currentSession.createNativeQuery("SELECT * FROM tbl_course c JOIN tbl_professor p ON p.professor_id = c.prof_id", Course.class);
         List<Course> list = query.getResultList();
         return list;
     }
@@ -42,5 +44,19 @@ public class CourseDAOImpl implements CourseDAO {
         Session currentSession = entityManager.unwrap(Session.class);
         Course courseObj = currentSession.get(Course.class, id);
         currentSession.delete(courseObj);
+    }
+
+    @Override
+    public List<Course> search(String keyword) {
+        Session currentSession = entityManager.unwrap(Session.class);
+//        Query<Professor> query = currentSession.createQuery("from Professor p where p.name = :name ", Professor.class)
+//        .setParameter("name",name);
+        Query<Course> query = currentSession.createQuery("FROM Course c WHERE c.courseName LIKE :course_name OR c.department LIKE :dep OR c.professorName LIKE :professorName ", Course.class)
+                .setParameter("course_name","%"+keyword+"%")
+                .setParameter("dep","%"+keyword+"%")
+                .setParameter("professorName","%"+keyword+"%");
+
+        List<Course> list = query.getResultList();
+        return list;
     }
 }

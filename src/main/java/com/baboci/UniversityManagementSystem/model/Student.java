@@ -31,6 +31,17 @@ public class Student {
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     private List<Enrollment> enrollments;
 
+    public Student(){
+
+    }
+
+    public Student(String name, String gender, String department, List<Enrollment> enrollments) {
+        this.name = name;
+        this.gender = gender;
+        this.department = department;
+        this.enrollments = enrollments;
+    }
+
     @Override
     public String toString(){
         return "Student [id=" + id + ", name=" + name + ", gender=" + gender +

@@ -1,9 +1,11 @@
 package com.baboci.UniversityManagementSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,13 +28,34 @@ public class Course {
     @Column(name = "course_dep")
     private String department;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
+    @Column(name = "professor_name")
+    private String professorName;
+
+    @ManyToOne(fetch = FetchType.EAGER )
     @JoinColumn(name="prof_id")
+    @JsonBackReference
     private Professor professorID;
 
-    @OneToMany(mappedBy="courseID",
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
+    @OneToMany(mappedBy="courseID",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Enrollment> enrollmentList;
+
+    public Course(){
+
+    }
+
+    public Course(String courseName, String department, String professorName, List<Enrollment> enrollmentList) {
+        this.courseName = courseName;
+        this.department = department;
+        this.professorName = professorName;
+        this.professorID = new Professor();
+        this.enrollmentList = enrollmentList;
+    }
+
+    public Course(String courseName, String department,String professorName) {
+        this.courseName = courseName;
+        this.department = department;
+        this.professorName = professorName;
+    }
 
     @Override
     public String toString(){
