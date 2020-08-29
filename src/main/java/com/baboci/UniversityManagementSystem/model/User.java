@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import java.util.Set;
 		uniqueConstraints = { 
 			@UniqueConstraint(columnNames = "username")
 		})
-public class User {
+public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -24,6 +25,18 @@ public class User {
 	@NotBlank
 	@Size(max = 120)
 	private String password;
+
+	//bi-directional many-to-one association to Instructor
+//	@OneToMany(mappedBy="user")
+//	private Set<Professor> professors;
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Professor professor;
+
+	//bi-directional many-to-one association to Student
+//	@OneToMany(mappedBy="user")
+//	private Set<Student> students;
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Student student;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles",
@@ -37,6 +50,13 @@ public class User {
 	public User(String username,  String password) {
 		this.username = username;
 		this.password = password;
+	}
+
+	public User(@NotBlank @Size(max = 20) String username, @NotBlank @Size(max = 120) String password, Professor professor, Student student) {
+		this.username = username;
+		this.password = password;
+		this.professor = professor;
+		this.student = student;
 	}
 
 	public Long getId() {

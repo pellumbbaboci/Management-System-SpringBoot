@@ -1,5 +1,6 @@
 package com.baboci.UniversityManagementSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import java.util.List;
 @Table(name = "tbl_professor")
 @Getter
 @Setter
-public class Professor {
+public class Professor implements Serializable{
 
     @Column(name = "professor_id")
     @Id
@@ -29,6 +30,16 @@ public class Professor {
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JsonManagedReference
     private List<Course> courseList;
+
+    //bi-directional many-to-one association to User
+//    @JsonIgnore
+//    @ManyToOne
+//    @JoinColumn(name="user_id")
+//    private User user;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL,
+            mappedBy = "professor")
+    private User user;
 
     public Professor(){
 

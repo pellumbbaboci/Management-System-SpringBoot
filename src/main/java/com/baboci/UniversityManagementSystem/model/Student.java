@@ -1,10 +1,12 @@
 package com.baboci.UniversityManagementSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.Set;
 @Table(name = "tbl_student")
 @Getter
 @Setter
-public class Student {
+public class Student implements Serializable {
 
     @Column(name = "student_id")
     @Id
@@ -30,6 +32,15 @@ public class Student {
     @OneToMany(mappedBy="studentID",
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     private List<Enrollment> enrollments;
+
+    //bi-directional many-to-one association to User
+//    @JsonIgnore
+//    @ManyToOne
+//    @JoinColumn(name="user_id")
+//    private User user;
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL,
+            mappedBy = "student")
+    private User user;
 
     public Student(){
 

@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "tbl_course")
 @Getter
 @Setter
-public class Course {
+public class Course implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
