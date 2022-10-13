@@ -7,6 +7,7 @@
   "assigneesFromCodeOwners": true,
   "packageRules": [
     {
+      "schedule": ["on friday and saturday"],
       "matchPackagePatterns": [
         "*"
       ],
@@ -22,6 +23,7 @@
       ]
     },
     {
+      "schedule": ["on friday and saturday"],
       "matchPackagePatterns": [
         "*"
       ],
