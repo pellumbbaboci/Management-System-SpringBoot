@@ -17,7 +17,7 @@
       ],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch",
-      "automerge": true,
+      "automerge": false,
       "labels": [
         "dependencies"
       ]
